@@ -13,7 +13,7 @@ const helper = {
     lexiconName2: 'Test',
   },
 
-  params: {
+  speechParams: {
     OutputFormat: 'pcm',
     VoiceId: 'Raveena',
     Text: 'text',
@@ -31,4 +31,6 @@ const helper = {
   },
 };
 
-export default helper;
+export const {
+  config, lexiconNames, speechParams, incompleteParams, lexiconFile
+} = helper;

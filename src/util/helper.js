@@ -2,17 +2,18 @@ import AWS, { Polly } from 'aws-sdk';
 import Syncano from 'syncano-server';
 
 /** Class respresenting AWS rekognition actions */
-class helper {
+class Helper {
   /**
    * Constructs a service object for each API operation
    *
    * @param {Object} configDetails - Contains the AWS configuration parameters
    */
   constructor(configDetails) {
+    const { region, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY } = configDetails;
     this.polly = new AWS.Polly({
-      region: configDetails.region,
-      accessKeyId: configDetails.AWS_ACCESS_KEY_ID,
-      secretAccessKey: configDetails.AWS_SECRET_ACCESS_KEY,
+      region,
+      accessKeyId: AWS_ACCESS_KEY_ID,
+      secretAccessKey: AWS_SECRET_ACCESS_KEY,
     });
   }
 
@@ -83,4 +84,4 @@ class helper {
   }
 }
 
-module.exports = helper;
+module.exports = Helper;

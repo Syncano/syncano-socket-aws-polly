@@ -1,17 +1,15 @@
-import AWS from 'aws-sdk';
 import Syncano from 'syncano-server';
-import helper from './util/helper';
+import Helper from './util/helper';
 
 export default (ctx) => {
   const { response, logger } = Syncano(ctx);
 
   const log = logger('Socket scope');
 
-  const pollyHelper = new helper(ctx.config);
+  const pollyHelper = new Helper(ctx.config);
 
-  const listLexicons = pollyHelper.listLexicons(ctx.args.nextTokens);
-
-  return listLexicons
+  return pollyHelper
+    .listLexicons(ctx.args.nextTokens)
     .then((data) => {
       response.json({
         message: 'List of Lexicons',

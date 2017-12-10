@@ -1,16 +1,14 @@
-import AWS from 'aws-sdk';
 import Syncano from 'syncano-server';
-import helper from './util/helper';
+import Helper from './util/helper';
 
 export default (ctx) => {
   const { response, logger } = Syncano(ctx);
 
   const log = logger('Socket scope');
-  const pollyHelper = new helper(ctx.config);
+  const pollyHelper = new Helper(ctx.config);
 
-  const deleteLexicon = pollyHelper.deleteLexicon(ctx.args.lexiconName);
-
-  return deleteLexicon
+  return pollyHelper
+    .deleteLexicon(ctx.args.lexiconName)
     .then((data) => {
       response.json({
         statusCode: 200,

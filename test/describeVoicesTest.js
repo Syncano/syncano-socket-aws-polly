@@ -1,10 +1,8 @@
 import { assert, expect } from 'chai';
 import { run } from 'syncano-test';
-import helper from './util/testHelper';
+import { config } from './util/testHelper';
 
 describe('Describe Voices', () => {
-  const config = helper.config;
-
   it('returns all voices when no languageCode is entered', (done) => {
     run('describeVoices', {
       config,

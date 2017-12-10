@@ -1,19 +1,16 @@
 import { assert, expect } from 'chai';
 import { run } from 'syncano-test';
-import helper from './util/testHelper';
+import { config, lexiconNames, lexiconFile } from './util/testHelper';
 
 describe('Get Lexicon', () => {
-  const config = helper.config;
-
   it('returns information of requested celebrity', (done) => {
-    const lexiconPlsFile = helper.lexiconFile();
     run('putLexicon', {
-      args: { lexiconName: helper.lexiconNames.lexiconName2, content: lexiconPlsFile },
+      args: { lexiconName: lexiconNames.lexiconName2, content: lexiconFile() },
       config,
     }).then((response) => {
       run('getLexicon', {
         args: {
-          lexiconName: helper.lexiconNames.lexiconName2,
+          lexiconName: lexiconNames.lexiconName2,
         },
         config,
       }).then((res) => {

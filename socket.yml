@@ -18,7 +18,7 @@ config:
   region:
     description: Region
     long_description: |
-      On your AWS Console, search for Rekognition to check supported regions and select one (e.g, us-east-1 )
+      On your AWS Console, search for Polly to check supported regions and select one (e.g, us-east-1 )
     required: true
 
 endpoints:

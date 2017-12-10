@@ -1,14 +1,11 @@
 import { assert } from 'chai';
 import { run } from 'syncano-test';
-import helper from './util/testHelper';
+import { config, lexiconNames, lexiconFile } from './util/testHelper';
 
 describe('Put Lexicon', () => {
-  const config = helper.config;
-
   it('saves lexicon successfully', (done) => {
-    const lexiconPlsFile = helper.lexiconFile();
     run('putLexicon', {
-      args: { lexiconName: helper.lexiconNames.lexiconName1, content: lexiconPlsFile },
+      args: { lexiconName: lexiconNames.lexiconName1, content: lexiconFile() },
       config,
     }).then((response) => {
       assert.property(response.data, 'message', 'Lexicon Saved');
@@ -19,7 +16,7 @@ describe('Put Lexicon', () => {
 
   it('saves lexicon successfully', (done) => {
     run('putLexicon', {
-      args: { lexiconName: helper.lexiconNames.lexiconName1 },
+      args: { lexiconName: lexiconNames.lexiconName1 },
       config,
     }).then((response) => {
       assert.property(response.data, 'statusCode', 400);

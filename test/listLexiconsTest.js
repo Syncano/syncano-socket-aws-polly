@@ -1,10 +1,8 @@
 import { assert, expect } from 'chai';
 import { run } from 'syncano-test';
-import helper from './util/testHelper';
+import { config } from './util/testHelper';
 
 describe('List Lexicon', () => {
-  const config = helper.config;
-
   it('list all lexicon successfully', (done) => {
     run('listLexicons', {
       config,

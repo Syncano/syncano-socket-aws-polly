@@ -1,0 +1,217 @@
+name: aws-polly
+description: Amazon Polly Integration
+long_description: |
+  Amazon Polly is a Text-to-Speech (TTS) cloud service that converts text into lifelike speech.
+version: 0.0.1
+
+config:
+  AWS_ACCESS_KEY_ID:
+    description: AWS Access Key
+    long_description: |
+      To find the key, log into your AWS account to get it
+    required: true
+  AWS_SECRET_ACCESS_KEY:
+    description: AWS Access Secret Key
+    long_description: |
+      To find the key, log into your AWS account to get it
+    required: true
+  region:
+    description: Region
+    long_description: |
+      On your AWS Console, search for Polly to check supported regions and select one (e.g, us-east-1 )
+    required: true
+
+endpoints:
+  deleteLexicon:
+    description: Deletes the specified pronunciation lexicon stored in an AWS Region.
+    parameters:
+      lexiconName:
+        type: string
+        description: The name of the lexicon to delete. Must be an existing lexicon in the region.
+        example: "Example"
+     
+    response:
+      mimetype: application/json
+      examples:
+        -
+          exit_code: 200
+          description: Success
+          example: |
+            {
+            "statusCode": 200,
+            "message": "Lexicon Deleted"
+            }
+        -
+          exit_code: 400
+          description: Failed
+          example: |
+            {
+              "statusCode": 404,
+              "code": "LexiconNotFoundException",
+              "message": "Lexicon not found"
+            }
+
+  describeVoices:
+    description: Returns the list of voices that are available for use when requesting speech synthesis.
+    parameters:
+      languageCode:
+        type: string
+        description: "Language identification tag for filtering the list of voices returned (Optional)"
+        example: "en-US"
+      nextToken:
+        type: string
+        description: "An opaque pagination token returned from the previous `DescribeVoices` operation."
+        example: "opaqueToken"
+     
+    response:
+      mimetype: application/json
+      examples:
+        -
+          exit_code: 200
+          description: Success
+          example: |
+            {
+             "message": "Described Voice",
+              "data": {
+                        "Voices": []
+                      }
+            }
+        -
+          exit_code: 400
+          description: Failed
+          example: |
+            {
+             "statusCode": 400,
+             "code": "ValidationException",
+             "message": "1 validation error detected"
+            }
+
+  getLexicon:
+    description: Returns the content of the specified pronunciation lexicon stored in an AWS Region
+    parameters:
+      lexiconName:
+        type: string
+        description: "Name of the lexicon."
+        example: "Example"
+     
+    response:
+      mimetype: application/json
+      examples:
+        -
+          exit_code: 200
+          description: Success
+          example: |
+            {
+            "statusCode": 200,
+            "data": {
+                      "Lexicon": {}
+                    }
+            }
+        -
+          exit_code: 400
+          description: Failed
+          example: |
+            {
+              "statusCode": 404,
+              "code": "LexiconNotFoundException",
+              "message": "Lexicon not found"
+            }
+
+  listLexicons:
+    description: Returns a list of pronunciation lexicons stored in an AWS Region.
+    parameters:
+      nextTokens:
+        type: string
+        description: "An opaque pagination token returned from previous ListLexicons operation. (Optional)"
+        example: "token"
+     
+    response:
+      mimetype: application/json
+      examples:
+        -
+          exit_code: 200
+          description: Success
+          example: |
+            {
+            "message": "List of Lexicons"
+            "data": {
+                      "Lexicons": []
+                    }
+            }
+        -
+          exit_code: 400
+          description: Failed
+          example: |
+            {
+              "detail": "Not found."
+            }
+
+
+  putLexicon:
+    description: Stores a pronunciation lexicon in an AWS Region.
+    parameters:
+      lexiconName:
+        type: string
+        description: "Name of the lexicon -  name is case sensitive"
+        example: "Example"
+      content:
+        type: string
+        description: "Content of the PLS lexicon"
+        example: "Check PSL for its text format."
+        
+    response:
+      mimetype: application/json
+      examples:
+        -
+          exit_code: 200
+          description: Success
+          example: |
+            {
+            "StatusCode": 200
+            "message": "Lexicon Saved"
+            }
+        -
+          exit_code: 400
+          description: Failed
+          example: |
+            {
+              "statusCode": 400,
+              "code": "MissingRequiredParameter",
+              "message": "Missing required key 'Content' in params"
+            }
+
+  synthesizeSpeech:
+    description: Synthesizes UTF-8 input, plain text or SSML, to a stream of bytes.
+    file: synthesizeSpeech.js
+    parameters:
+      params:
+        type: object
+        description: "First name of the person you want to greet"
+        example: |
+          {"params":
+            { "OutputFormat": "pcm",
+              "VoiceId": "Raveena",
+              "Text": "text"
+              }
+            }
+     
+    response:
+      mimetype: application/json
+      examples:
+        -
+          exit_code: 200
+          description: Success
+          example: |
+            {
+            msg: "Text converted",
+            data: {}
+            }
+        -
+          exit_code: 400
+          description: Failed
+          example: |
+            {
+              "statusCode": 400,
+              "code": "MissingRequiredParameter",
+              "message": "Missing required key 'Text' in params"
+            }

@@ -1,10 +1,8 @@
-import Syncano from 'syncano-server';
+import Syncano from '@syncano/core';
 import Helper from './util/helper';
 
 export default (ctx) => {
-  const { response, logger } = Syncano(ctx);
-
-  const log = logger('Socket scope');
+  const { response } = new Syncano(ctx);
   const pollyHelper = new Helper(ctx.config);
 
   return pollyHelper

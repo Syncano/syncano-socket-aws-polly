@@ -1,5 +1,4 @@
-import AWS, { Polly } from 'aws-sdk';
-import Syncano from 'syncano-server';
+import AWS from 'aws-sdk';
 
 /** Class respresenting AWS rekognition actions */
 class Helper {
@@ -84,4 +83,4 @@ class Helper {
   }
 }
 
-module.exports = Helper;
+export default Helper;

@@ -1,10 +1,10 @@
 import { assert } from 'chai';
-import { run } from 'syncano-test';
+import { run } from '@syncano/test';
 import { config, lexiconNames, lexiconFile } from './util/testHelper';
 
 describe('Put Lexicon', () => {
   it('saves lexicon successfully', (done) => {
-    run('putLexicon', {
+    run('put-lexicon', {
       args: { lexiconName: lexiconNames.lexiconName1, content: lexiconFile() },
       config,
     }).then((response) => {
@@ -15,7 +15,7 @@ describe('Put Lexicon', () => {
   });
 
   it('saves lexicon successfully', (done) => {
-    run('putLexicon', {
+    run('put-lexicon', {
       args: { lexiconName: lexiconNames.lexiconName1 },
       config,
     }).then((response) => {

@@ -1,10 +1,10 @@
 import { assert, expect } from 'chai';
-import { run } from 'syncano-test';
+import { run } from '@syncano/test';
 import { config } from './util/testHelper';
 
 describe('Describe Voices', () => {
   it('returns all voices when no languageCode is entered', (done) => {
-    run('describeVoices', {
+    run('describe-voices', {
       config,
     }).then((response) => {
       expect(response.data.data)
@@ -15,7 +15,7 @@ describe('Describe Voices', () => {
   });
 
   it('returns an error message if an invalid languageCode is entered', (done) => {
-    run('describeVoices', {
+    run('describe-voices', {
       args: { languageCode: 'fake' },
       config,
     }).then((response) => {

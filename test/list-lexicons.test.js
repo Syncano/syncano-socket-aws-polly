@@ -1,10 +1,10 @@
-import { assert, expect } from 'chai';
-import { run } from 'syncano-test';
+import { expect } from 'chai';
+import { run } from '@syncano/test';
 import { config } from './util/testHelper';
 
 describe('List Lexicon', () => {
   it('list all lexicon successfully', (done) => {
-    run('listLexicons', {
+    run('list-lexicons', {
       config,
     }).then((response) => {
       expect(response.data.data)

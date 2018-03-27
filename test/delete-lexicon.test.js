@@ -1,14 +1,14 @@
-import { assert, expect } from 'chai';
-import { run } from 'syncano-test';
+import { assert } from 'chai';
+import { run } from '@syncano/test';
 import { config, lexiconNames, lexiconFile } from './util/testHelper';
 
 describe('Delete Lexicon', () => {
   it('deletes requested Lexicon', (done) => {
-    run('putLexicon', {
+    run('put-lexicon', {
       args: { lexiconName: lexiconNames.lexiconName1, content: lexiconFile() },
       config,
-    }).then((response) => {
-      run('deleteLexicon', {
+    }).then(() => {
+      run('delete-lexicon', {
         args: {
           lexiconName: lexiconNames.lexiconName2,
         },
@@ -22,7 +22,7 @@ describe('Delete Lexicon', () => {
   });
 
   it('returns an error message when no lexiconName parameter is entered', (done) => {
-    run('deleteLexicon', {
+    run('delete-lexicon', {
       args: {},
       config,
     }).then((response) => {

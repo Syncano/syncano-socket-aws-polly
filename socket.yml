@@ -1,10 +1,10 @@
 name: aws-polly
 description: Amazon Polly Integration
-long_description: |
-  Amazon Polly is a Text-to-Speech (TTS) cloud service that converts text into lifelike speech.
-version: 0.0.2
+long_description: >
+  Amazon Polly is a Text-to-Speech (TTS) cloud service that converts text into
+  lifelike speech.
+version: 0.0.3
 runtime: nodejs_v8
-
 config:
   AWS_ACCESS_KEY_ID:
     description: AWS Access Key
@@ -18,10 +18,10 @@ config:
     required: true
   region:
     description: Region
-    long_description: |
-      On your AWS Console, search for Polly to check supported regions and select one (e.g, us-east-1 )
+    long_description: >
+      On your AWS Console, search for Polly to check supported regions and
+      select one (e.g, us-east-1 )
     required: true
-
 endpoints:
   delete-lexicon:
     description: Deletes the specified pronunciation lexicon stored in an AWS Region.
@@ -29,7 +29,9 @@ endpoints:
       properties:
         lexiconName:
           type: string
-          description: The name of the lexicon to delete. Must be an existing lexicon in the region.
+          description: >-
+            The name of the lexicon to delete. Must be an existing lexicon in
+            the region.
           examples:
             - Example
         username:
@@ -44,7 +46,7 @@ endpoints:
             - How are you doing.
         room:
           type: string
-          description:  Name of group, should only contain url friendly characters.
+          description: 'Name of group, should only contain url friendly characters.'
           examples:
             - group_sports
     outputs:
@@ -67,19 +69,24 @@ endpoints:
               "code": "LexiconNotFoundException",
               "message": "Lexicon not found"
             }
-
   describe-voices:
-    description: Returns the list of voices that are available for use when requesting speech synthesis.
+    description: >-
+      Returns the list of voices that are available for use when requesting
+      speech synthesis.
     inputs:
       properties:
         languageCode:
           type: string
-          description: Language identification tag for filtering the list of voices returned (Optional)
+          description: >-
+            Language identification tag for filtering the list of voices
+            returned (Optional)
           examples:
             - en-US
         nextToken:
           type: string
-          description: An opaque pagination token returned from the previous `DescribeVoices` operation.
+          description: >-
+            An opaque pagination token returned from the previous
+            `DescribeVoices` operation.
           examples:
             - opaqueToken
     outputs:
@@ -104,14 +111,15 @@ endpoints:
               "code": "ValidationException",
               "message": "1 validation error detected"
             }
-
   get-lexicon:
-    description: Returns the content of the specified pronunciation lexicon stored in an AWS Region
+    description: >-
+      Returns the content of the specified pronunciation lexicon stored in an
+      AWS Region
     inputs:
       properties:
         lexiconName:
           type: string
-          description: "Name of the lexicon."
+          description: Name of the lexicon.
           examples:
             - Example
     outputs:
@@ -136,7 +144,6 @@ endpoints:
               "code": "LexiconNotFoundException",
               "message": "Lexicon not found"
             }
-
   list-lexicons:
     description: Returns a list of pronunciation lexicons stored in an AWS Region.
     inputs:
@@ -144,8 +151,9 @@ endpoints:
         nextTokens:
           type: string
           description: Pagination token
-          long_description: |
-            An opaque pagination token returned from previous ListLexicons operation. (Optional)
+          long_description: >
+            An opaque pagination token returned from previous ListLexicons
+            operation. (Optional)
           examples:
             - token
     outputs:
@@ -168,7 +176,6 @@ endpoints:
             {
               "detail": "Not found."
             }
-
   put-lexicon:
     description: Stores a pronunciation lexicon in an AWS Region.
     inputs:
@@ -203,9 +210,8 @@ endpoints:
               "code": "MissingRequiredParameter",
               "message": "Missing required key 'Content' in params"
             }
-
   synthesize-speech:
-    description: Synthesizes UTF-8 input, plain text or SSML, to a stream of bytes.
+    description: 'Synthesizes UTF-8 input, plain text or SSML, to a stream of bytes.'
     inputs:
       properties:
         params:
@@ -245,5 +251,3 @@ endpoints:
               "code": "MissingRequiredParameter",
               "message": "Missing required key 'Text' in params"
             }
-
-

@@ -1,14 +1,14 @@
 import { assert, expect } from 'chai';
-import { run } from 'syncano-test';
+import { run } from '@syncano/test';
 import { config, lexiconNames, lexiconFile } from './util/testHelper';
 
 describe('Get Lexicon', () => {
   it('returns information of requested celebrity', (done) => {
-    run('putLexicon', {
+    run('put-lexicon', {
       args: { lexiconName: lexiconNames.lexiconName2, content: lexiconFile() },
       config,
     }).then((response) => {
-      run('getLexicon', {
+      run('get-lexicon', {
         args: {
           lexiconName: lexiconNames.lexiconName2,
         },
@@ -21,7 +21,7 @@ describe('Get Lexicon', () => {
   });
 
   it('returns an error message when no lexiconName is entered', (done) => {
-    run('getLexicon', {
+    run('get-lexicon', {
       args: {},
       config,
     }).then((response) => {

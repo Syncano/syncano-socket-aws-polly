@@ -56,7 +56,9 @@ typings/
 
 # dotenv environment variables file
 .env
+.envrc
 
 .DS_Store
 .dist/
 .npmignore
+.idea

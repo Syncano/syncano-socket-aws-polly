@@ -2,7 +2,8 @@ name: aws-polly
 description: Amazon Polly Integration
 long_description: |
   Amazon Polly is a Text-to-Speech (TTS) cloud service that converts text into lifelike speech.
-version: 0.0.1
+version: 0.0.2
+runtime: nodejs_v8
 
 config:
   AWS_ACCESS_KEY_ID:
@@ -22,198 +23,227 @@ config:
     required: true
 
 endpoints:
-  deleteLexicon:
+  delete-lexicon:
     description: Deletes the specified pronunciation lexicon stored in an AWS Region.
-    parameters:
-      lexiconName:
-        type: string
-        description: The name of the lexicon to delete. Must be an existing lexicon in the region.
-        example: "Example"
-     
-    response:
-      mimetype: application/json
-      examples:
-        -
-          exit_code: 200
-          description: Success
-          example: |
+    inputs:
+      properties:
+        lexiconName:
+          type: string
+          description: The name of the lexicon to delete. Must be an existing lexicon in the region.
+          examples:
+            - Example
+        username:
+          type: string
+          description: Name of the User (Required only when user token not sent).
+          examples:
+            - Nik
+        message_text:
+          type: string
+          description: Content of the message.
+          examples:
+            - How are you doing.
+        room:
+          type: string
+          description:  Name of group, should only contain url friendly characters.
+          examples:
+            - group_sports
+    outputs:
+      success:
+        exit_code: 200
+        description: Success
+        examples:
+          - |
             {
-            "statusCode": 200,
-            "message": "Lexicon Deleted"
+              "statusCode": 200,
+              "message": "Lexicon Deleted"
             }
-        -
-          exit_code: 400
-          description: Failed
-          example: |
+      fail:
+        exit_code: 400
+        description: Failed
+        examples:
+          - |
             {
               "statusCode": 404,
               "code": "LexiconNotFoundException",
               "message": "Lexicon not found"
             }
 
-  describeVoices:
+  describe-voices:
     description: Returns the list of voices that are available for use when requesting speech synthesis.
-    parameters:
-      languageCode:
-        type: string
-        description: "Language identification tag for filtering the list of voices returned (Optional)"
-        example: "en-US"
-      nextToken:
-        type: string
-        description: "An opaque pagination token returned from the previous `DescribeVoices` operation."
-        example: "opaqueToken"
-     
-    response:
-      mimetype: application/json
-      examples:
-        -
-          exit_code: 200
-          description: Success
-          example: |
+    inputs:
+      properties:
+        languageCode:
+          type: string
+          description: Language identification tag for filtering the list of voices returned (Optional)
+          examples:
+            - en-US
+        nextToken:
+          type: string
+          description: An opaque pagination token returned from the previous `DescribeVoices` operation.
+          examples:
+            - opaqueToken
+    outputs:
+      success:
+        exit_code: 200
+        description: Success
+        examples:
+          - |
             {
-             "message": "Described Voice",
+              "message": "Described Voice",
               "data": {
-                        "Voices": []
-                      }
+                "Voices": []
+              }
             }
-        -
-          exit_code: 400
-          description: Failed
-          example: |
+      fail:
+        exit_code: 400
+        description: Failed
+        examples:
+          - |
             {
-             "statusCode": 400,
-             "code": "ValidationException",
-             "message": "1 validation error detected"
+              "statusCode": 400,
+              "code": "ValidationException",
+              "message": "1 validation error detected"
             }
 
-  getLexicon:
+  get-lexicon:
     description: Returns the content of the specified pronunciation lexicon stored in an AWS Region
-    parameters:
-      lexiconName:
-        type: string
-        description: "Name of the lexicon."
-        example: "Example"
-     
-    response:
-      mimetype: application/json
-      examples:
-        -
-          exit_code: 200
-          description: Success
-          example: |
+    inputs:
+      properties:
+        lexiconName:
+          type: string
+          description: "Name of the lexicon."
+          examples:
+            - Example
+    outputs:
+      success:
+        exit_code: 200
+        description: Success
+        examples:
+          - |
             {
-            "statusCode": 200,
-            "data": {
-                      "Lexicon": {}
-                    }
+              "statusCode": 200,
+              "data": {
+                "Lexicon": {}
+              }
             }
-        -
-          exit_code: 400
-          description: Failed
-          example: |
+      fail:
+        exit_code: 400
+        description: Failed
+        examples:
+          - |
             {
-              "statusCode": 404,
+              "statusCode": 400,
               "code": "LexiconNotFoundException",
               "message": "Lexicon not found"
             }
 
-  listLexicons:
+  list-lexicons:
     description: Returns a list of pronunciation lexicons stored in an AWS Region.
-    parameters:
-      nextTokens:
-        type: string
-        description: pagination token
-        long_description: |
-          "An opaque pagination token returned from previous ListLexicons operation. (Optional)"
-        example: "token"
-     
-    response:
-      mimetype: application/json
-      examples:
-        -
-          exit_code: 200
-          description: Success
-          example: |
+    inputs:
+      properties:
+        nextTokens:
+          type: string
+          description: Pagination token
+          long_description: |
+            An opaque pagination token returned from previous ListLexicons operation. (Optional)
+          examples:
+            - token
+    outputs:
+      success:
+        exit_code: 200
+        description: Success
+        examples:
+          - |
             {
-            "message": "List of Lexicons"
-            "data": {
-                      "Lexicons": []
-                    }
+              "message": "List of Lexicons"
+              "data": {
+                "Lexicon": []
+              }
             }
-        -
-          exit_code: 400
-          description: Failed
-          example: |
+      fail:
+        exit_code: 400
+        description: Failed
+        examples:
+          - |
             {
               "detail": "Not found."
             }
 
-
-  putLexicon:
+  put-lexicon:
     description: Stores a pronunciation lexicon in an AWS Region.
-    parameters:
-      lexiconName:
-        type: string
-        description: "Name of the lexicon -  name is case sensitive"
-        example: "Example"
-      content:
-        type: string
-        description: "Content of the PLS lexicon"
-        example: "Check PSL for its text format."
-        
-    response:
-      mimetype: application/json
-      examples:
-        -
-          exit_code: 200
-          description: Success
-          example: |
+    inputs:
+      properties:
+        lexiconName:
+          type: string
+          description: Name of the lexicon -  name is case sensitive
+          examples:
+            - Example
+        content:
+          type: string
+          description: Content of the PLS lexicon
+          examples:
+            - Check PSL for its text format.
+    outputs:
+      success:
+        exit_code: 200
+        description: Success
+        examples:
+          - |
             {
-            "StatusCode": 200
-            "message": "Lexicon Saved"
+              "StatusCode": 200
+              "message": "Lexicon Saved"
             }
-        -
-          exit_code: 400
-          description: Failed
-          example: |
+      fail:
+        exit_code: 400
+        description: Failed
+        examples:
+          - |
             {
               "statusCode": 400,
               "code": "MissingRequiredParameter",
               "message": "Missing required key 'Content' in params"
             }
 
-  synthesizeSpeech:
+  synthesize-speech:
     description: Synthesizes UTF-8 input, plain text or SSML, to a stream of bytes.
-    file: synthesizeSpeech.js
-    parameters:
-      params:
-        type: object
-        description: "First name of the person you want to greet"
-        example: |
-          {"params":
-            { "OutputFormat": "pcm",
-              "VoiceId": "Raveena",
-              "Text": "text"
+    inputs:
+      properties:
+        params:
+          type: object
+          description: First name of the person you want to greet
+          examples:
+            - |
+              {
+                "params": {
+                  "OutputFormat": "pcm",
+                  "VoiceId": "Raveena",
+                  "Text": "text"
+                }
               }
-            }
-     
-    response:
-      mimetype: application/json
-      examples:
-        -
-          exit_code: 200
-          description: Success
-          example: |
+        content:
+          type: string
+          description: Content of the PLS lexicon
+          examples:
+            - Check PSL for its text format.
+    outputs:
+      success:
+        exit_code: 200
+        description: Success
+        examples:
+          - |
             {
-            msg: "Text converted",
-            data: {}
+              msg: "Text converted",
+              data: {}
             }
-        -
-          exit_code: 400
-          description: Failed
-          example: |
+      fail:
+        exit_code: 400
+        description: Failed
+        examples:
+          - |
             {
               "statusCode": 400,
               "code": "MissingRequiredParameter",
               "message": "Missing required key 'Text' in params"
             }
+
+

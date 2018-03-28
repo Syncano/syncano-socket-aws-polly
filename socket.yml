@@ -3,7 +3,7 @@ description: Amazon Polly Integration
 long_description: >
   Amazon Polly is a Text-to-Speech (TTS) cloud service that converts text into
   lifelike speech.
-version: 0.0.4
+version: 0.0.5
 runtime: nodejs_v8
 config:
   AWS_ACCESS_KEY_ID:

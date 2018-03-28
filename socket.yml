@@ -122,7 +122,9 @@ endpoints:
     parameters:
       nextTokens:
         type: string
-        description: "An opaque pagination token returned from previous ListLexicons operation. (Optional)"
+        description: pagination token
+        long_description: |
+          "An opaque pagination token returned from previous ListLexicons operation. (Optional)"
         example: "token"
      
     response:
